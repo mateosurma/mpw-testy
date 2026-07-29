@@ -276,7 +276,19 @@ function importProgress(file) {
       renderSetup();
     }
   });
+document.getElementById("btn-export").addEventListener("click", function () {
+  exportProgress();
+});
 
+document.getElementById("btn-import").addEventListener("click", function () {
+  document.getElementById("file-import").click();
+});
+
+document.getElementById("file-import").addEventListener("change", function (e) {
+  if (e.target.files.length) {
+    importProgress(e.target.files[0]);
+  }
+});
   function payoffAt(legs, S) {
     var total = 0;
     legs.forEach(function (leg) {
