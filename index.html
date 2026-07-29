@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPW — Testy egzaminacyjne</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- EKRAN STARTOWY -->
+  <section id="screen-setup" class="screen screen-narrow">
+    <h1>Testy MPW</h1>
+
+    <div class="stats-box">
+      <div class="stat">
+        <div class="stat-label">Przerobione pytania</div>
+        <div class="stat-value"><span id="stat-done-count">0</span> / <span id="stat-total-count">0</span>
+          <span class="stat-pct">(<span id="stat-done-pct">0</span>%)</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Poprawne (z przerobionych)</div>
+        <div class="stat-value"><span id="stat-correct-count">0</span> / <span id="stat-done-count-2">0</span>
+          <span class="stat-pct">(<span id="stat-correct-pct">0</span>%)</span></div>
+      </div>
+    </div>
+
+    <label for="round-size" class="round-label">Ile pytań chcesz przerobić w tej rundzie?</label>
+    <input type="number" id="round-size" min="1" value="20">
+    <div id="round-hint" class="hint"></div>
+
+    <button id="btn-start" class="btn-primary">Start</button>
+
+    <button id="btn-reset" class="btn-link">Wyzeruj cały postęp</button>
+  </section>
+
+  <!-- EKRAN RUNDY -->
+  <section id="screen-quiz" class="screen screen-wide hidden">
+    <div class="quiz-progress">Pytanie <span id="q-index">1</span> / <span id="q-total">20</span></div>
+
+    <div class="quiz-body">
+      <div class="quiz-left">
+        <div id="question-text" class="question-text"></div>
+        <div id="options" class="options"></div>
+        <button id="btn-next" class="btn-primary hidden">Dalej</button>
+      </div>
+
+      <div class="quiz-right">
+        <div id="explain-wrap" class="explain-wrap hidden">
+          <button id="btn-explain" class="btn-secondary">Wyjaśnienie</button>
+        </div>
+        <div id="explain-panel" class="explain-panel hidden"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EKRAN PODSUMOWANIA RUNDY -->
+  <section id="screen-summary" class="screen screen-narrow hidden">
+    <h1>Koniec rundy</h1>
+    <div class="summary-result">
+      Wynik: <span id="summary-correct">0</span> / <span id="summary-total">0</span>
+      (<span id="summary-pct">0</span>%)
+    </div>
+    <button id="btn-back" class="btn-primary">Wróć do menu</button>
+  </section>
+
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

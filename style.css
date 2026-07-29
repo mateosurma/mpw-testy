@@ -1,0 +1,451 @@
+:root {
+  --bg: hsl(220, 38%, 14%);
+  --panel: hsl(220, 34%, 20%);
+  --border: hsl(220, 32%, 34%);
+  --text-dim: hsl(220, 22%, 64%);
+  --text: hsl(220, 8%, 98%);
+  --accent: hsl(25, 72%, 60%);
+  --correct: hsl(142, 55%, 55%);
+  --wrong: hsl(355, 75%, 65%);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Yu Gothic", Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  align-items: safe center;
+  justify-content: safe center;
+}
+
+#app {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  padding: 5vh 5vw;
+}
+
+.screen {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  padding: 48px;
+  width: 100%;
+}
+
+.screen-narrow {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.screen-wide {
+  max-width: 1500px;
+  min-height: 78vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen-wide .quiz-body {
+  flex: 1;
+}
+
+.hidden { display: none !important; }
+
+h1 {
+  margin: 0 0 32px;
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  position: relative;
+  padding-left: 22px;
+}
+
+h1::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.stats-box {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.stat {
+  flex: 1;
+  padding: 0 0 0 16px;
+  border-left: 1px solid var(--border);
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.stat-pct {
+  font-weight: 400;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.round-label {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+#round-size {
+  width: 100%;
+  font-size: 1.05rem;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid var(--text);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.hint {
+  min-height: 1.2em;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 15px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  border: 1px solid var(--text);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  letter-spacing: 0.2em;
+}
+
+.btn-primary:hover { background: var(--text); color: var(--panel); }
+
+.btn-link {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  margin-top: 20px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+.quiz-progress {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  margin-bottom: 24px;
+  letter-spacing: 0.12em;
+}
+
+.quiz-body {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.quiz-left {
+  flex: 1 1 55%;
+  min-width: 0;
+}
+
+.quiz-right {
+  flex: 1 1 45%;
+  min-width: 0;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--border);
+  padding-left: 48px;
+}
+
+@media (max-width: 860px) {
+  .quiz-body {
+    flex-direction: column;
+  }
+  .quiz-right {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding-left: 0;
+    padding-top: 22px;
+    margin-top: 10px;
+    min-height: auto;
+    width: 100%;
+  }
+}
+
+.question-text {
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.9;
+  margin-bottom: 30px;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.option-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 0;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.option-btn:hover:not(:disabled) {
+  color: var(--accent);
+}
+
+.option-btn:disabled {
+  cursor: default;
+}
+
+.option-btn:disabled:not(.correct):not(.wrong) {
+  opacity: 0.6;
+}
+
+.option-btn .opt-letter {
+  font-weight: 400;
+  margin-right: 14px;
+  color: var(--text-dim);
+}
+
+.option-btn.correct {
+  color: var(--correct);
+  font-weight: 600;
+  border-bottom: 2px solid var(--correct);
+  padding-left: 8px;
+}
+
+.option-btn.correct::before {
+  content: "✓ ";
+}
+
+.option-btn.correct .opt-letter {
+  color: var(--correct);
+}
+
+.option-btn.wrong {
+  color: var(--wrong);
+  text-decoration: line-through;
+  border-bottom: 2px solid var(--wrong);
+  padding-left: 8px;
+}
+
+.option-btn.wrong .opt-letter {
+  color: var(--wrong);
+}
+
+.option-btn.wrong::before {
+  content: "✕ ";
+}
+
+.explain-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-secondary {
+  padding: 10px 26px;
+  border-radius: 0;
+  border: 1px solid var(--text-dim);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+}
+
+.explain-panel {
+  margin-top: 20px;
+  padding-top: 18px;
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--text);
+  width: 100%;
+  font-weight: 300;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.explain-panel strong { color: var(--accent); font-weight: 400; }
+
+.summary-result {
+  font-size: 1.3rem;
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+/* --- rozpisane wyliczenia (pytania obliczeniowe) --- */
+
+.calc-explain .section-label {
+  font-weight: 400;
+  color: var(--text-dim);
+  margin: 18px 0 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.calc-explain .section-label:first-child {
+  margin-top: 0;
+}
+
+.calc-explain .legend-list,
+.calc-explain .steps-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.calc-explain .legend-list li,
+.calc-explain .steps-list li {
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+
+.calc-explain .steps-list li {
+  margin-bottom: 12px;
+}
+
+.formula-block {
+  margin: 10px 0;
+  padding: 18px 14px;
+  border-radius: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  text-align: center;
+  font-size: 1.05rem;
+  color: var(--text);
+  font-weight: 300;
+  overflow-x: auto;
+}
+
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  margin: 0 7px;
+  text-align: center;
+}
+
+.frac .num {
+  display: block;
+  padding: 0 4px 4px;
+  border-bottom: 1px solid var(--accent);
+}
+
+.frac .den {
+  display: block;
+  padding: 4px 4px 0;
+}
+
+.calc-explain .result-line {
+  margin-top: 6px;
+}
+
+.calc-explain .result-line strong {
+  color: var(--accent);
+}
+
+/* --- wykresy wypłaty strategii opcyjnych --- */
+
+.payoff-chart {
+  margin: 12px 0;
+  width: 100%;
+}
+
+.payoff-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.payoff-axis,
+.payoff-strike {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.payoff-zero {
+  stroke: var(--text-dim);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.payoff-curve {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+
+.payoff-be {
+  fill: var(--accent);
+}
+
+.payoff-label {
+  fill: var(--text-dim);
+  font-size: 11px;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.payoff-be-label {
+  fill: var(--accent);
+  font-weight: 600;
+}
