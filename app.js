@@ -54,7 +54,41 @@
   function saveProgress() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   }
+function exportProgress() {
+  var data = localStorage.getItem(STORAGE_KEY) || "{}";
+  var blob = new Blob([data], {type: "application/json"});
+  var url = URL.createObjectURL(blob);
 
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "mpw_progress_backup.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function importProgress(file) {
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    try {
+      var imported = JSON.parse(e.target.result);
+
+      if (typeof imported !== "object") {
+        throw new Error();
+      }
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(imported));
+      alert("Progress zaimportowany. Odśwież stronę.");
+      location.reload();
+
+    } catch(err) {
+      alert("Nieprawidłowy plik Progress.");
+    }
+  };
+
+  reader.readAsText(file);
+}
   function pct(n, d) {
     if (!d) return 0;
     return Math.round((n / d) * 1000) / 10;
